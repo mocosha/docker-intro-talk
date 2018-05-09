@@ -5,6 +5,7 @@ If we want to do this as a workshop, important thing is to prepare all memebers 
 Create git repo for this: store presentation and source there
 
 ### Talk
+
 - What is docker?
 - Why you need docker and why not?
 - History of docker
@@ -21,6 +22,7 @@ Create git repo for this: store presentation and source there
 - Explain how images and repositories for images are working
 
 ### Extra for talk
+
 - docker swarm ????
 - scaling with docker-compose ????
 - docker-machine? this loooks obsolete but needs checking
@@ -31,6 +33,7 @@ Create git repo for this: store presentation and source there
 
 https://www.slideshare.net/mario21ic/docker-compose-to-production-with-docker-swarm
 http://linhmtran168.github.io/docker-compose-slides
+https://www.slideshare.net/Docker/introduction-to-docker-2017
 
 ###  Presentation
 https://github.com/hakimel/reveal.js/
