@@ -1,258 +1,158 @@
-- title : React Native with F#
-- description : Introduction to React Native with F#
-- author : Steffen Forkmann
+- title : Docker Intro Talk
+- description : Introduction to Docker and docker-compose
+- author : Mladen Brndušić and Evgeny Grebenyuk
 - theme : night
 - transition : default
 
 ***
 
-## React Native with F#
+## Docker Intro Talk
 
 <br />
 <br />
 
-### Modern mobile app development
+### Introduction to Docker and docker-compose
 
 <br />
 <br />
-Steffen Forkmann - [@sforkmann](http://www.twitter.com/sforkmann)
+Mladen Brndušić - [@brndusic](https://github.com/brndusic)
+<br />
+Evgeny Grebenyuk - [@eugene-g](https://github.com/eugene-g)
 
 ***
 
-### Modern mobile app development?
+### Docker
 
-* UI/UX
-    * "Native mobile apps"
-    * Performance
-* Tooling
-    * Hot loading
-    * IntelliSense
-* Maintainability
-    * Easy to debug
-    * Correctness
-
----
-
-### "Native" UI
-
- <img src="images/meter.png" style="background: transparent; border-style: none;"  width=300 />
-
----
-
-### Tooling
-
-<img src="images/hotloading.gif" style="background: transparent; border-style: none;"  />
-
-*** 
-
-### Model - View - Update
-
-#### "Elm - Architecture"
-
- <img src="images/Elm.png" style="background: white;" width=700 />
-
-
- <small>http://danielbachler.de/2016/02/11/berlinjs-talk-about-elm.html</small>
-
-
---- 
-
-### Model - View - Update
-
-    // MODEL
-
-    type Model = int
-
-    type Msg =
-    | Increment
-    | Decrement
-
-    let init() : Model = 0
-
----
-
-### Model - View - Update
-
-    // VIEW
-
-    let view model dispatch =
-        div []
-            [ button [ OnClick (fun _ -> dispatch Decrement) ] [ str "-" ]
-              div [] [ str (model.ToString()) ]
-              button [ OnClick (fun _ -> dispatch Increment) ] [ str "+" ] ]
-
----
-
-### Model - View - Update
-
-    // UPDATE
-
-    let update (msg:Msg) (model:Model) =
-        match msg with
-        | Increment -> model + 1
-        | Decrement -> model - 1
-
----
-
-### Model - View - Update
-
-    // wiring things up
-
-    Program.mkSimple init update view
-    |> Program.withConsoleTrace
-    |> Program.withReact "elmish-app"
-    |> Program.run
-
----
-
-### Model - View - Update
-
-# Demo
+* What is docker
+    * Docker is a tool designed to make it easier to create, deploy, and run applications by using containers. 
+* What are containers?
+    * Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package.
 
 ***
 
-### Sub-Components
+### Benefits of Docker
 
-    // MODEL
+* Reproducibility
+* Isolation
+* Security
+* Docker Hub
+* Environment Management
+* Continuous Integration
 
-    type Model = {
-        Counters : Counter.Model list
-    }
-
-    type Msg = 
-    | Insert
-    | Remove
-    | Modify of int * Counter.Msg
-
-    let init() : Model =
-        { Counters = [] }
+[// When and why to use docker]: <>  https://www.linode.com/docs/applications/containers/when-and-why-to-use-docker/
 
 ---
 
-### Sub-Components
+### When to Use Docker
 
-    // VIEW
-
-    let view model dispatch =
-        let counterDispatch i msg = dispatch (Modify (i, msg))
-
-        let counters =
-            model.Counters
-            |> List.mapi (fun i c -> Counter.view c (counterDispatch i)) 
-        
-        div [] [ 
-            yield button [ OnClick (fun _ -> dispatch Remove) ] [  str "Remove" ]
-            yield button [ OnClick (fun _ -> dispatch Insert) ] [ str "Add" ] 
-            yield! counters ]
+* Learning new technologies
+* Basic use cases
+* App isolation
+* Developer teams
 
 ---
 
-### Sub-Components
+### When Not to Use Docker
 
-    // UPDATE
-
-    let update (msg:Msg) (model:Model) =
-        match msg with
-        | Insert ->
-            { Counters = Counter.init() :: model.Counters }
-        | Remove ->
-            { Counters = 
-                match model.Counters with
-                | [] -> []
-                | x :: rest -> rest }
-        | Modify (id, counterMsg) ->
-            { Counters =
-                model.Counters
-                |> List.mapi (fun i counterModel -> 
-                    if i = id then
-                        Counter.update counterMsg counterModel
-                    else
-                        counterModel) }
+* Your app is complicated and you are not/do not have a sysadmin
+* Performance is critical to your application
+* Security is critical to your application
 
 ---
 
-### Sub-Components
+### Should you use Docker Containers?
 
-# Demo
+```bash
+# Run PosgreSQL container
+docker container run -d postgres
+```
 
 ***
 
-### React
-
-* Facebook library for UI 
-* <code>state => view</code>
-* Virtual DOM
-
----
-
-### Virtual DOM - Initial
+### History of Docker and containers
 
 <br />
+
+[A brief history of Docker Containers overnight success](https://searchservervirtualization.techtarget.com/feature/A-brief-history-of-Docker-Containers-overnight-success)
 <br />
-
-
- <img src="images/onchange_vdom_initial.svg" style="background: white;" />
-
-<br />
-<br />
-
- <small>http://teropa.info/blog/2015/03/02/change-and-its-detection-in-javascript-frameworks.html</small>
-
----
-
-### Virtual DOM - Change
-
-<br />
-<br />
-
-
- <img src="images/onchange_vdom_change.svg" style="background: white;" />
-
-<br />
-<br />
-
- <small>http://teropa.info/blog/2015/03/02/change-and-its-detection-in-javascript-frameworks.html</small>
-
----
-
-### Virtual DOM - Reuse
-
-<br />
-<br />
-
-
- <img src="images/onchange_immutable.svg" style="background: white;" />
-
-<br />
-<br />
-
- <small>http://teropa.info/blog/2015/03/02/change-and-its-detection-in-javascript-frameworks.html</small>
-
-
-*** 
-
-### ReactNative
-
- <img src="images/ReactNative.png" style="background: white;" />
-
-
- <small>http://timbuckley.github.io/react-native-presentation</small>
+[A brief history of containers from 1970s chroot to docker 2016](https://blog.aquasec.com/a-brief-history-of-containers-from-1970s-chroot-to-docker-2016)
 
 ***
 
-### Show me the code
+### Docker vs LXC vs VM
 
-*** 
+* VM - Virtual Machine
+    * Entire Virtual Machine setup
+* LXC - LinuX Containers
+    * No preloaded emulation manager software as in a VM
+    * Requires extra learning and expertise
+* Windows Containers
+    * Windows Server 2016
+* Docker
+    * Portable
+    * Versioning
+    * Component reuse
+    * Shared libraries like Docker Hub
+    * Docker uses LXC
 
-### TakeAways
+[//1]: <> https://www.upguard.com/articles/docker-vs-lxc
+[//2]: <> https://stackoverflow.com/questions/17989306/what-does-docker-add-to-lxc-tools-the-userspace-lxc-tools
 
-* Learn all the FP you can!
-* Simple modular design
+***
+
+### Docker image
+
+* Docker image is an inert, immutable, file that's essentially a snapshot of a container
+* Docker image is built up from a series of layers. Each layer represents an instruction in the image's Dockerfile. Each layer except the very last one is read-only.
+
+---
+
+### Docker Container
+
+* An instance of an image is called a container
+
+---
+
+### Creating image from Dockerfile
+
+* Dockerfile example
+
+```bash
+FROM microsoft/aspnetcore
+WORKDIR /app
+COPY . .
+EXPOSE 5000
+ENTRYPOINT ["dotnet", "SampleService.dll"]
+```
+
+<br />
+
+* Creating image from Docker file
+
+```bash
+docker image build --tag image_name ./Dockerfile
+```
+
+
+---
+
+### Image tags and layers
+
+* Images can be taged like on git
+* Only differences are using space
+* Respository is used for storing and sharing images
+* Example 1
+
+***
+
+### Container orchestration
+
+* Docker Compose
+* Docker Swarm
+* Kubernetes
+
+[//3]: <> https://www.slant.co/topics/3929/~docker-orchestration-tools
 
 *** 
 
 ### Thank you!
-
-* https://github.com/fable-compiler/fable-elmish
-* https://ionide.io
-* https://facebook.github.io/react-native/
