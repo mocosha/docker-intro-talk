@@ -1,0 +1,28 @@
+version: "3.5"
+
+services: 
+  static-file-server-one:
+    image: static-html
+    # container_name: static-file-server-one
+    # ports:
+    #   - 8780:80
+    networks: 
+      private-network:
+        aliases: 
+          - static-file-server
+  static-file-server-two:
+    image: static-html
+    # container_name: static-file-server-two
+    # ports:
+    #   - 8781:80
+    networks: 
+      private-network:
+        aliases: 
+          - static-file-server
+    volumes: 
+      - ./static-files:/usr/share/nginx/html
+
+networks:
+  private-network:
+    driver: bridge
+    name: private-example-network
