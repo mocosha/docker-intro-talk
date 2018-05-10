@@ -62,20 +62,37 @@ Evgeny Grebenyuk - [@eugene-g](https://github.com/eugene-g)
 
 ### Should you use Docker Containers?
 
+---
+
+
 ```bash
-# Run PosgreSQL container
-docker container run -d postgres
+# Run PostgreSQL container
+docker container run -d --name postgresDB postgres
+docker container rm postgresDB
+```
+
+#### VS
+
+```bash
+# Install PostgreSQL
+sudo apt-get install postgresql
+# setup firewall, users, no isolation
+sudo apt-get uninstall postgresql
 ```
 
 ***
 
 ### History of Docker and containers
 
-<br />
+* 1979: Unix V7 - chroot
+* 2000: FreeBSD Jails - jails
+* 2004: Solaris Containers - snapshots
+* 2005: Open VZ (Open Virtuozzo) - OS level virtualization
+* 2008: LXC - containers
+* 2013: Docker 
 
-[A brief history of Docker Containers overnight success](https://searchservervirtualization.techtarget.com/feature/A-brief-history-of-Docker-Containers-overnight-success)
-<br />
-[A brief history of containers from 1970s chroot to docker 2016](https://blog.aquasec.com/a-brief-history-of-containers-from-1970s-chroot-to-docker-2016)
+[// A brief history of Docker Containers overnight success]: <> https://searchservervirtualization.techtarget.com/feature/A-brief-history-of-Docker-Containers-overnight-success
+[// A brief history of containers from 1970s chroot to docker 2016]: <> https://blog.aquasec.com/a-brief-history-of-containers-from-1970s-chroot-to-docker-2016
 
 ***
 
@@ -90,10 +107,10 @@ docker container run -d postgres
     * Windows Server 2016
 * Docker
     * Portable
+    * Crossplatform
     * Versioning
     * Component reuse
     * Shared libraries like Docker Hub
-    * Docker uses LXC
 
 [//1]: <> https://www.upguard.com/articles/docker-vs-lxc
 [//2]: <> https://stackoverflow.com/questions/17989306/what-does-docker-add-to-lxc-tools-the-userspace-lxc-tools
@@ -138,10 +155,9 @@ docker image build --tag image_name ./Dockerfile
 
 ### Image tags and layers
 
-* Images can be taged like on git
+* Images can be tagged like on git
 * Only differences are using space
-* Respository is used for storing and sharing images
-* Example 1
+* Repository is used for storing and sharing images
 
 ***
 
@@ -155,4 +171,4 @@ docker image build --tag image_name ./Dockerfile
 
 *** 
 
-### Thank you!
+# Thank you!

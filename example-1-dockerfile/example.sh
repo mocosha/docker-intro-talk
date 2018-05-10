@@ -18,3 +18,5 @@ docker container run --detach --name static-1.1 -p 8680:80 brndusic/static-html:
 
 docker container rm --force static-1.0 static-1.1
 docker image rm brndusic/static-html:latest brndusic/static-html:1.0 brndusic/static-html:1.1
+
+# pushing images to remote repository
