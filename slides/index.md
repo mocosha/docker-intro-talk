@@ -165,7 +165,11 @@ docker image build --tag image_name ./Dockerfile
 
 * Docker Compose
 * Docker Swarm
+* Rancher
+* Mesos
 * Kubernetes
+* Helm
+
 
 [//3]: <> https://www.slant.co/topics/3929/~docker-orchestration-tools
 
